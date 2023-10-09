@@ -1,0 +1,3 @@
+{
+    "ignoreFoldersAtLoad":  ["servired", "regional"]
+}

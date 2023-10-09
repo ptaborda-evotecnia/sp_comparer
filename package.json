@@ -1,0 +1,26 @@
+{
+  "name": "sp-comparer",
+  "version": "1.0.7",
+  "description": "",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx comparer"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "inquirer": "^8.0.0",
+    "minimist": "^1.2.8",
+    "mssql": "^6.2.3",
+    "progress": "^2.0.3",
+    "readdirp": "^3.6.0"
+  },
+  "bin": {
+    "comparer": "./bin/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0"
+  }
+}

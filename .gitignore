@@ -1,0 +1,10 @@
+node_modules/
+scripts/
+scripts_out/
+backend/
+config/
+scripts/
+*sp_comparer.json
+*.tgz
+backend/
+*lintrc.json
