@@ -1,10 +1,9 @@
 const dotenv = require('dotenv')
-dotenv.config({ path: 'config/config.env' })
 const fs = require('fs')
 let inquirer = require('inquirer').default
 inquirer = require('inquirer')
 
-const { descargarSPs, compararScriptsConBBDD, compararScriptsConCodigo } = require('./lib/inquirerFunctions')
+const { descargarSPs, compararScriptsConBBDD, compararScriptsConCodigo, seleccionarConfig, actualizarSPs } = require('./lib/inquirerFunctions')
 const { eliminarScriptInutilizados } = require('./lib/eliminarScriptsInutilizados')
 const { keyPress } = require('./lib/keypress')
 
@@ -16,16 +15,27 @@ if (fs.existsSync('sp_comparer.json'))
 async function main() {
 
     let resultados_codigo = {}
+
+    if (config.conexiones) {
+        let conexionesValidas = config.conexiones.filter(x => x.nombre && typeof x.nombre === 'string' && x.rutaConfig && typeof x.rutaConfig === 'string')
+        let ruta = await seleccionarConfig(conexionesValidas)
+        dotenv.config({ path: ruta })
+    } else {
+        dotenv.config({ path: 'config/config.env' })
+    }
+
     if (fs.existsSync('resultadoscodigo_sp_comparer.json'))
         resultados_codigo = JSON.parse(fs.readFileSync('./resultadoscodigo_sp_comparer.json', 'utf-8'))
 
-    console.clear()
+    //console.clear()
     if (config.proyecto)
         console.log('Proyecto configurado: ' + config.proyecto + '\n')
     let opciones = [
         '1 - Comparar scripts con la base de datos',
         '2 - Comparar llamadas dentro del codigo con scripts',
         '3 - Descargar SPs',
+        '4 - Actualizar SPs',
+
     ];
     //console.clear()
 
@@ -56,6 +66,8 @@ async function main() {
         await compararScriptsConBBDD()
     } else if (choice.includes('2')) {
         await compararScriptsConCodigo()
+    } else if (choice.includes('4')) {
+        await actualizarSPs()
     } else if (choice.includes('Eliminar')) {
         await eliminarScriptInutilizados()
     }

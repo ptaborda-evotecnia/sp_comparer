@@ -3,7 +3,7 @@ const main = require("../index");
 const minimist = require('minimist');
 const { keyPress } = require("../lib/keypress");
 const { compararScriptsConCodigo, seleccionarPrompt } = require("../lib/inquirerFunctions");
-const { descargarScriptsFaltantes } = require("../lib/descargarScriptsFaltantes");
+const { descargarScriptsEnCodigo } = require("../lib/descargarScriptsEnCodigo");
 const { compararAllProcedimientos } = require("../lib/compareProcedure");
 const { buscarScript, getProcedureDefinition } = require("../lib/getProcedure");
 const { openMeldFileVsContent } = require("../lib/openMeld");
@@ -13,7 +13,7 @@ const argv = minimist(process.argv.slice(2));
 
 async function tmpMain() {
     if (argv.init) {
-        await descargarScriptsFaltantes('./scripts/')
+        await descargarScriptsEnCodigo('./scripts/')
         await keyPress()
         console.clear()
         console.log('Comparar scripts con el código')
