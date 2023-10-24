@@ -3,29 +3,21 @@ const fs = require('fs')
 let inquirer = require('inquirer').default
 inquirer = require('inquirer')
 
-const { descargarSPs, compararScriptsConBBDD, compararScriptsConCodigo, seleccionarConfig, actualizarSPs } = require('./lib/inquirerFunctions')
+const { descargarSPs, compararScriptsConBBDD, compararScriptsConCodigo, actualizarSPs, compararScriptsEnConflicto } = require('./lib/inquirerFunctions')
 const { eliminarScriptInutilizados } = require('./lib/eliminarScriptsInutilizados')
 const { keyPress } = require('./lib/keypress')
-
-let config = {}
-
-if (fs.existsSync('sp_comparer.json'))
-    config = JSON.parse(fs.readFileSync('./sp_comparer.json', 'utf-8'))
+const { loadConfig } = require('./lib/readConfig')
 
 async function main() {
 
-    let resultados_codigo = {}
-
-    if (config.conexiones) {
-        let conexionesValidas = config.conexiones.filter(x => x.nombre && typeof x.nombre === 'string' && x.rutaConfig && typeof x.rutaConfig === 'string')
-        let ruta = await seleccionarConfig(conexionesValidas)
-        dotenv.config({ path: ruta })
-    } else {
-        dotenv.config({ path: 'config/config.env' })
-    }
+    let config = await loadConfig()
+    let resultados_codigo, conflictos
 
     if (fs.existsSync('resultadoscodigo_sp_comparer.json'))
         resultados_codigo = JSON.parse(fs.readFileSync('./resultadoscodigo_sp_comparer.json', 'utf-8'))
+
+    if (fs.existsSync('resultadoscodigo_sp_comparer.json'))
+        conflictos = JSON.parse(fs.readFileSync('./resultados_sp_comparer.json', 'utf-8'))
 
     //console.clear()
     if (config.proyecto)
@@ -41,6 +33,7 @@ async function main() {
 
     if (resultados_codigo.missingScriptNames) opciones.push(`${opciones.length + 1} - Buscar scripts faltantes (No implementado)`)
     if (resultados_codigo.unusedScriptNames) opciones.push(`${opciones.length + 1} - Eliminar scripts inutilizados`)
+    if (conflictos) opciones.push(`${opciones.length + 1} - Comparar scripts en conflicto`)
 
     opciones.push('Exit')
 
@@ -70,6 +63,8 @@ async function main() {
         await actualizarSPs()
     } else if (choice.includes('Eliminar')) {
         await eliminarScriptInutilizados()
+    } else if (choice.includes('Comparar scripts en conflicto')) {
+        await compararScriptsEnConflicto()
     }
 
     await keyPress()
