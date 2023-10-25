@@ -31,8 +31,8 @@ async function main() {
     ];
     //console.clear()
 
-    if (resultados_codigo.missingScriptNames) opciones.push(`${opciones.length + 1} - Buscar scripts faltantes (No implementado)`)
-    if (resultados_codigo.unusedScriptNames) opciones.push(`${opciones.length + 1} - Eliminar scripts inutilizados`)
+    if (resultados_codigo?.missingScriptNames) opciones.push(`${opciones.length + 1} - Buscar scripts faltantes (No implementado)`)
+    if (resultados_codigo?.unusedScriptNames) opciones.push(`${opciones.length + 1} - Eliminar scripts inutilizados`)
     if (conflictos) opciones.push(`${opciones.length + 1} - Comparar scripts en conflicto`)
 
     opciones.push('Exit')
