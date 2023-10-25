@@ -16,7 +16,7 @@ async function main() {
     if (fs.existsSync('resultadoscodigo_sp_comparer.json'))
         resultados_codigo = JSON.parse(fs.readFileSync('./resultadoscodigo_sp_comparer.json', 'utf-8'))
 
-    if (fs.existsSync('resultadoscodigo_sp_comparer.json'))
+    if (fs.existsSync('resultados_sp_comparer.json'))
         conflictos = JSON.parse(fs.readFileSync('./resultados_sp_comparer.json', 'utf-8'))
 
     //console.clear()
