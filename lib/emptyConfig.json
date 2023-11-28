@@ -1,10 +1,14 @@
 {
     "projects": [
-        {
-            "projectName": "projectName",
-            "ignoreFoldersAtLoad": [],
-            "ignoredScripts": [],
-            "connections": []
-        }
+      {
+        "projectName": "default",
+        "ignoredScripts": [],
+        "connections": [
+          {
+            "name": "develop",
+            "route": "config/config.env"
+          }
+        ]
+      }
     ]
-}
+  }
