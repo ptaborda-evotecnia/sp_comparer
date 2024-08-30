@@ -1,0 +1,14 @@
+{
+    "projects": [
+      {
+        "projectName": "default",
+        "ignoredScripts": [],
+        "connections": [
+          {
+            "name": "develop",
+            "route": "config/config.env"
+          }
+        ]
+      }
+    ]
+  }

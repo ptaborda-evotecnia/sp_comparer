@@ -1,6 +1,6 @@
 {
   "name": "sp-comparer",
-  "version": "1.0.10",
+  "version": "1.0.28",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
